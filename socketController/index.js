@@ -23,6 +23,7 @@ export function SocketController(io, socket) {
     const roomId = room.id;
     socket.join(roomId);
     socket.emit("room-created", roomId);
+    console.log("new room");
   };
 
   const createChatRoom = async ({ ownerId }) => {
