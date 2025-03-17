@@ -10,6 +10,8 @@ import { syncDatabase } from "./models/index.js";
 
 import userRoutes from "./routes/userRoutes.js";
 import messagesRoutes from "./routes/messagesRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
@@ -24,6 +26,7 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -32,6 +35,8 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/users", userRoutes);
 app.use("/api/messages", messagesRoutes);
